@@ -1,0 +1,59 @@
+clc;
+clear;
+close all;
+
+vertices = [2 2 0 1;
+            2 5 0 1;
+            5 5 0 1;
+            5 2 0 1]';
+
+desplazamientoY = 4;
+paso = 0.1;
+
+for recorrido = 0:paso:desplazamientoY
+
+    clf;
+    hold on;
+    grid on;
+
+
+    line([0 10], [0 0], [0 0], ...
+        "Color","red","LineWidth",2);
+
+    line([0 0], [0 10], [0 0], ...
+        "Color","green","LineWidth",2);
+
+    for n = 1:4
+        scatter(vertices(1,n), vertices(2,n), ...
+            "filled","red");
+    end
+
+
+    verticesMovidos = zeros(size(vertices));
+
+    for n = 1:4
+        verticesMovidos(:,n) = Traslacion(0, recorrido, 0, vertices(:,n));
+
+        scatter(verticesMovidos(1,n), verticesMovidos(2,n), ...
+            "filled","green");
+    end
+
+    for n = 1:4
+
+        siguiente = n + 1;
+
+        if siguiente > 4
+            siguiente = 1;
+        end
+
+        line([verticesMovidos(1,n) verticesMovidos(1,siguiente)], ...
+             [verticesMovidos(2,n) verticesMovidos(2,siguiente)], ...
+             "LineWidth",1.5);
+    end
+
+    axis([0 10 0 10]);
+    axis equal;
+
+    pause(0.1);
+
+end
